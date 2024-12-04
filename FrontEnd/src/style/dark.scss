@@ -1,0 +1,215 @@
+.app.dark {
+    background-color: #111;
+    color: white !important;
+
+    * {
+        color: white !important;
+    }
+
+    .chartGrid {
+        stroke: rgba(228, 228, 228, 0.219);
+    }
+
+    .table {
+        background-color: #111;
+
+        .tableCell {
+            color: white !important;
+        }
+    }
+
+    .navbar {
+        background-color: #1c1c1c;
+        border-color: #333;
+
+        .search {
+            border-color: gray;
+            background-color: #333;
+            
+            input {
+                color: white !important;
+                &::placeholder {
+                    color: #999;
+                }
+            }
+        }
+    }
+
+    .sidebar {
+        background-color: #1c1c1c;
+        border-color: #333;
+
+        .top {
+            .logo {
+                color: white !important;
+            }
+        }
+        hr {
+            border-color: #333;
+        }
+
+        ul {
+            li {
+                &:hover {
+                    background-color: #333;
+                }
+
+                .icon {
+                    color: white !important;
+                }
+            }
+        }
+    }
+
+    .feed {
+        background-color: #111;
+        
+        .feedWrapper {
+            background-color: #111;
+            
+            .post {
+                background-color: #1c1c1c;
+                border: 1px solid #333;
+                
+                .postWrapper {
+                    .postTop {
+                        .postTopLeft {
+                            .postUsername {
+                                color: white !important;
+                            }
+                            .postDate {
+                                color: #999 !important;
+                            }
+                        }
+                    }
+                    
+                    .postCenter {
+                        .postText {
+                            color: white !important;
+                        }
+                    }
+                    
+                    .postBottom {
+                        border-top: 1px solid #333;
+                        
+                        .postBottomLeft {
+                            .likeIcon {
+                                color: white !important;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .rightbar {
+        background-color: #1c1c1c;
+        
+        .rightbarWrapper {
+            .birthdayContainer {
+                .birthdayText {
+                    color: white !important;
+                }
+            }
+            
+            .rightbarTitle {
+                color: white !important;
+            }
+            
+            .rightbarFriendList {
+                .rightbarFriend {
+                    .rightbarUsername {
+                        color: white !important;
+                    }
+                }
+            }
+        }
+    }
+
+    .datatable {
+        .datagrid {
+            color: white !important;
+            border: none;
+            background-color: #1c1c1c;
+
+            .viewButton,
+            .deleteButton,
+            .cellWithStatus {
+                color: white !important;
+                border: none;
+            }
+        }
+    }
+
+    input, 
+    textarea, 
+    select {
+        background-color: #111 !important;
+        color: white !important;
+        border-color: #444 !important;
+        
+        &::placeholder {
+            color: #999 !important;
+        }
+    }
+
+    button {
+        background-color: #333;
+        color: white !important;
+        border-color: #444;
+        
+        &:hover {
+            background-color: #444;
+        }
+    }
+
+    // Card styles
+    .card {
+        background-color: #1c1c1c !important;
+        border-color: #333 !important;
+    }
+
+    // Link styles
+    a {
+        color: #4a9eff !important;
+        
+        &:hover {
+            color: #77b7ff !important;
+        }
+    }
+
+    // Modal styles
+    .modal {
+        .modal-content {
+            background-color: #1c1c1c;
+            border-color: #333;
+            
+            .modal-header {
+                border-bottom-color: #333;
+            }
+            
+            .modal-footer {
+                border-top-color: #333;
+            }
+        }
+    }
+
+    // MUI components
+    .MuiPaper-root {
+        background-color: #1c1c1c !important;
+        color: white !important;
+    }
+
+    .MuiTypography-root {
+        color: white !important;
+    }
+
+    .MuiButton-root {
+        color: white !important;
+    }
+
+    .MuiIconButton-root {
+        color: white !important;
+    }
+}

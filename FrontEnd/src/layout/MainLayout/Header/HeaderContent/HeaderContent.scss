@@ -1,0 +1,46 @@
+.search-overlay {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+
+  &.dark {
+    background-color: #1a1a1a;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+    .search-container {
+      background-color: #2d2d2d;
+    }
+  }
+
+  .search-container {
+    display: flex;
+    align-items: center;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    padding: 4px;
+  }
+}
+
+.dark {
+  .MuiPopover-paper {
+    background-color: #1a1a1a;
+    color: #fff;
+  }
+
+  .MuiListItem-root {
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+  }
+
+  .MuiListItemText-secondary {
+    color: rgba(255, 255, 255, 0.7);
+  }
+}
