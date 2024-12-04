@@ -36,4 +36,5 @@ build/
 /upload-dir/
 application.properties
 application-dev.properties
+secret.properties
 *.log
