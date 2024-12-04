@@ -1,39 +1,46 @@
-HELP.md
-target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
-
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-
-### IntelliJ IDEA ###
-.idea
-*.iws
+# IDE specific files
+.idea/
+.vscode/
 *.iml
+*.iws
 *.ipr
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
+# Compiled output
+target/
 build/
-!**/src/main/**/build/
-!**/src/test/**/build/
+out/
+dist/
 
-### VS Code ###
-.vscode/
-
-### Application Specific ###
-/upload-dir/
-application.properties
-application-dev.properties
+# Logs
 *.log
+*.log.*
+appLog/
+appLog*/
+logs/
+/logs/
+*.gz
+/appLog/
+/appLog/**
+log/
+/log/
+logging.path_IS_UNDEFINED/
+
+# Application properties
+application.properties
+application-*.properties
+secret.properties
+
+# Dependencies
+node_modules/
+.mvn/
+mvnw
+mvnw.cmd
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Upload directories
+**/uploads/
+**/images/
+/upload-dir/
