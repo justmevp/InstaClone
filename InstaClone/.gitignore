@@ -35,3 +35,31 @@ build/
 # Ignore environment variables file
 .env
 
+# Ignore application properties with sensitive information
+src/main/resources/secret.properties
+src/main/resources/application.properties
+
+# Ignore image files in resources
+src/main/resources/**/*.jpg
+src/main/resources/**/*.jpeg
+src/main/resources/**/*.png
+src/main/resources/**/*.gif
+src/main/resources/**/*.bmp
+src/main/resources/**/*.webp
+src/main/resources/**/*.svg
+src/main/resources/**/*.ico
+
+
+
+# Ignore logs
+*.log
+*.log.*
+appLog/
+logs/
+/logs/
+*.gz
+/appLog/
+/appLog/**
+log/
+/log/
+logging.path_IS_UNDEFINED/
