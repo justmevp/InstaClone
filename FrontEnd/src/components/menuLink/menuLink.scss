@@ -24,20 +24,30 @@
 
 @media only screen and (max-width: 992px){
     .menuLink{
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 8px;
 
         .menuLinkText{
-            display: none;
+            display: block;
+            margin-left: 8px;
+            font-size: 14px;
         }
 
         .menuLinkTextName{
             display: none;
         }
+    }
+}
 
-        &:hover{
-            display: block;
-            background-color: #011631;
-            color: white;
+@media only screen and (max-width: 576px){
+    .menuLink{
+        padding: 8px 5px;
+        justify-content: center;
+
+        .menuLinkText{
+            display: none;
         }
     }
 }

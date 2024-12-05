@@ -46,24 +46,9 @@ const Post = ({ post }) => {
   const [isLoadingComments, setIsLoadingComments] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
-  const [currentUserId, setCurrentUserId] = useState(null);
   
   // Hook điều hướng trang
   const navigate = useNavigate();
-
-  useEffect(() => {
-    // Hàm lấy thông tin user hiện tại
-    const getCurrentUser = async () => {
-      try {
-        const response = await fetchGetDataWithAuth('/auth/current-user');
-        setCurrentUserId(response.data.id);
-      } catch (error) {
-        console.error('Error getting current user:', error);
-      }
-    };
-
-    getCurrentUser();
-  }, []);
 
   useEffect(() => {
     // Hàm tải ảnh đại diện của người dùng
@@ -102,7 +87,7 @@ const Post = ({ post }) => {
     loadProfileImage();
     loadReactions();
     loadComments(); // Tải comments khi component được mount
-  }, [post.userName, post.id, currentUserId]);
+  }, [post.userName, post.id]);
 
   // Hàm tải danh sách comments của bài post
   const loadComments = async () => {

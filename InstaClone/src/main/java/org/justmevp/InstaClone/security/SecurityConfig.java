@@ -30,12 +30,11 @@ public class SecurityConfig {
 
     private RSAKey rsaKeys;
 
-    // Phương thức này tạo một JWKSource để cung cấp các khóa RSA cho JWT
     @Bean
     public JWKSource<SecurityContext> jwkSource() {
-        rsaKeys = Jwks.generateRsa(); // Tạo khóa RSA (cặp khóa công khai và riêng tư)
-        JWKSet jwkSet = new JWKSet(rsaKeys); // Đưa RSAKey vào JWKSet
-        return (jwkSelector, securityContext) -> jwkSelector.select(jwkSet); // Cung cấp JWKSet cho nguồn khóa
+        rsaKeys = Jwks.generateRsa(); 
+        JWKSet jwkSet = new JWKSet(rsaKeys);
+        return (jwkSelector, securityContext) -> jwkSelector.select(jwkSet);
     }
 
     @Bean
@@ -43,44 +42,25 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    // // Phương thức này tạo một InMemoryUserDetailsManager để lưu trữ thông tin
-    // người dùng trong bộ nhớ
-    // @Bean
-    // public InMemoryUserDetailsManager users() {
-    // return new InMemoryUserDetailsManager(
-    // User.withUsername("chaand")
-    // .password("{noop}password") // Định nghĩa tài khoản người dùng "chaand" với
-    // mật khẩu "password"
-    // .authorities("read") // Cấp quyền "read" cho người dùng này
-    // .build()
-    // );
-    // }
-
-    // Phương thức này tạo AuthenticationManager với DaoAuthenticationProvider dựa
-    // trên UserDetailsService
     @Bean
     public AuthenticationManager authManager(UserDetailsService userDetailsService) {
         var authProvider = new DaoAuthenticationProvider();
         authProvider.setPasswordEncoder(passwordEncoder());
-        authProvider.setUserDetailsService(userDetailsService); // Sử dụng UserDetailsService để xác thực
-        return new ProviderManager(authProvider); // Trả về AuthenticationManager với DaoAuthenticationProvider
+        authProvider.setUserDetailsService(userDetailsService); 
+        return new ProviderManager(authProvider); 
     }
 
-    // Phương thức này tạo JwtDecoder để giải mã các JWT, sử dụng khóa công khai của
-    // RSA
+    
     @Bean
     JwtDecoder jwtDecoder() throws JOSEException {
         return NimbusJwtDecoder.withPublicKey(rsaKeys.toRSAPublicKey()).build();
     }
 
-    // Phương thức này tạo JwtEncoder để mã hóa JWT, sử dụng JWKSource chứa khóa RSA
     @Bean
     JwtEncoder jwtEncoder(JWKSource<SecurityContext> jwks) {
         return new NimbusJwtEncoder(jwks);
     }
 
-    // Phương thức này cấu hình SecurityFilterChain cho ứng dụng, thiết lập các quy
-    // tắc bảo mật
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http    
@@ -100,9 +80,6 @@ public class SecurityConfig {
                 .and()
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-                
-                // TODO: remove these after upgrading the DB from H2 infile DB
-              
                 http.csrf().disable();
                 http.headers().frameOptions().disable();
 

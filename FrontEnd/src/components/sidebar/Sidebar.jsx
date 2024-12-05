@@ -25,7 +25,6 @@ const Sidebar = () => {
         const response = await fetchGetDataWithAuth('/users/mutual-friends');
         const data = await response.data;
         setFriends(data || []);
-        console.log("Friend list", data);
       } catch (error) {
         console.error(error);
       }

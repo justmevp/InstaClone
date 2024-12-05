@@ -64,7 +64,7 @@ public class UsersController {
                         
                         if (optionalPhoto.isPresent()) {
                             Photo photo = optionalPhoto.get();
-                            String profileImageUrl = "/api/v1/users/" + user.getId() + "/profiles/download-photo";
+                            String profileImageUrl = "/auth/users/" + user.getId() + "/profiles/download-photo";
                             photoProfileDTO = new PhotoProfileDTO(photo.getId(), photo.getName(),
                                     photo.getDescription(), photo.getFileName(), profileImageUrl);
                         }

@@ -75,15 +75,25 @@
 
 @media only screen and (max-width: 768px) {
   .sidebar {
-    display: block;
-
+    flex: 1;
+    position: relative;
+    height: auto;
+    width: 100%;
+    
     .sidebarWrapper {
-      padding: 3px;
+      padding: 10px;
     }
   }
 }
+
 @media only screen and (max-width: 576px) {
   .sidebar {
-    display: none;
+    position: relative;
+    width: 100%;
+    height: auto;
+    
+    .sidebarWrapper {
+      padding: 10px;
+    }
   }
 }

@@ -1,0 +1,7 @@
+.logo-svg {
+  fill: #000000;
+}
+
+.logo-svg.darkMode {
+  fill: #ffffff;
+}

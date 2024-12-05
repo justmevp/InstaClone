@@ -1,8 +1,6 @@
-// payload/auth/SearchUserDTO.java
 package org.justmevp.InstaClone.payload.auth;
 
 import org.justmevp.InstaClone.payload.auth.post.PhotoProfileDTO;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

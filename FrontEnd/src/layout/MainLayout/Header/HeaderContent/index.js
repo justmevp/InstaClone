@@ -4,8 +4,10 @@ import { useMediaQuery } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import CloseIcon from '@mui/icons-material/Close';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { DarkModeContext } from '../../../../components/context/darkModeContext';
+import { useNavigate } from 'react-router-dom';
+import { fetchGetDataWithAuth, fetchGetDataWithAuthArrayBuffer } from '../../../../client/client';
 
 // project import
 // import MobileSection from './MobileSection';
@@ -18,9 +20,76 @@ const HeaderContent = () => {
   const matchesXs = useMediaQuery((theme) => theme.breakpoints.down('md'));
   const [showSearch, setShowSearch] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-
- 
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [profileImages, setProfileImages] = useState({});
+  const navigate = useNavigate();
   const { darkMode } = useContext(DarkModeContext);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      if (searchQuery.trim()) {
+        try {
+          console.log('Searching for:', searchQuery);
+          const response = await fetchGetDataWithAuth(`/search?query=${encodeURIComponent(searchQuery)}&followedOnly=true`);
+          console.log('Search response:', response);
+          setSearchResults(response.data || []);
+        } catch (error) {
+          console.error('Error searching users:', error);
+          setSearchResults([]);
+        }
+      } else {
+        setSearchResults([]);
+      }
+    };
+
+    const delayDebounce = setTimeout(fetchUsers, 300);
+    return () => clearTimeout(delayDebounce);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    const loadProfileImages = async () => {
+      for (const user of searchResults) {
+       
+          try {
+            const response = await fetchGetDataWithAuthArrayBuffer(user.photoProfileDTO.profileImage);
+            const blob = new Blob([response.data]);
+            const imageUrl = URL.createObjectURL(blob);
+            setProfileImages(prev => ({
+              ...prev,
+              [user.id]: imageUrl
+            }));  
+          } catch (error) {
+            console.error('Error loading profile image:', error);
+          }
+       
+      }
+    };
+
+    loadProfileImages();
+  }, [searchResults]);
+
+  const handleSearchChange = (event) => {
+    const value = event.target.value;
+    console.log('Search input changed:', value);
+    setSearchQuery(value);
+  };
+
+  const handleSearchKeyDown = async (event) => {
+    if (event.key === 'Enter' && searchQuery.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      setShowSearch(false);
+      setSearchQuery('');
+      setSearchResults([]);
+    }
+  };
+
+  const handleUserClick = (userId) => {
+    navigate(`/profile/${userId}`);
+    setShowSearch(false);
+    setSearchQuery('');
+    setSearchResults([]);
+  };
 
   const handleNotificationClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -33,8 +102,6 @@ const HeaderContent = () => {
   const toggleSearch = () => {
     setShowSearch(!showSearch);
   };
-
- 
 
   const open = Boolean(anchorEl);
   const id = open ? 'notifications-popover' : undefined;
@@ -55,11 +122,23 @@ const HeaderContent = () => {
 
       {/* Search Overlay */}
       {showSearch && (
-        <Box className={`search-overlay ${darkMode ? 'dark' : ''}`}>
+        <Box 
+          className={`search-overlay ${darkMode ? 'dark' : ''}`}
+          onClick={(e) => {
+            // Chỉ đóng khi click vào overlay
+            if (e.target.classList.contains('search-overlay')) {
+              toggleSearch();
+            }
+          }}
+        >
           <Box className="search-container">
             <InputBase
-              placeholder="Search..."
+              placeholder="Tìm kiếm người dùng..."
               fullWidth
+              value={searchQuery}
+              onChange={handleSearchChange}
+              onKeyDown={handleSearchKeyDown}
+              autoFocus
               sx={{ 
                 ml: 2,
                 color: darkMode ? '#fff' : 'inherit',
@@ -72,6 +151,55 @@ const HeaderContent = () => {
               <CloseIcon />
             </IconButton>
           </Box>
+
+          {/* Search Results Dropdown */}
+          {searchResults.length > 0 && (
+            <Box 
+              sx={{ 
+                width: '100%',
+                maxWidth: 600,
+                margin: '0 auto',
+                mt: 1,
+                backgroundColor: darkMode ? '#1a1a1a' : '#fff',
+                borderRadius: 1,
+                boxShadow: 3
+              }}
+            >
+              <List>
+                {searchResults.map((user) => (
+                  <ListItem
+                    key={user.id}
+                    button
+                    onClick={() => handleUserClick(user.id)}
+                    sx={{
+                      '&:hover': {
+                        backgroundColor: darkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.04)'
+                      }
+                    }}
+                  >
+                    <ListItemAvatar>
+                      <Avatar
+                        src={profileImages[user.id] }
+                        alt={user.userName}
+                      />
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={
+                        <Typography sx={{ color: darkMode ? '#fff' : 'inherit' }}>
+                          {user.userName}
+                        </Typography>
+                      }
+                      secondary={
+                        <Typography sx={{ color: darkMode ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.6)' }}>
+                          {user.fullName}
+                        </Typography>
+                      }
+                    />
+                  </ListItem>
+                ))}
+              </List>
+            </Box>
+          )}
         </Box>
       )}
 
