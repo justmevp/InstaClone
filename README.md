@@ -36,8 +36,7 @@ A full-featured Instagram/Facebook clone built with Spring Boot and React, featu
   - Follow/Unfollow users
   - User search functionality
   - Activity feed
-  - User suggestions
-
+ 
 - **Post Management**
   - Photo upload and sharing
   - Post editing and deletion
@@ -47,8 +46,7 @@ A full-featured Instagram/Facebook clone built with Spring Boot and React, featu
 - **Interaction Features**
   - Like/Unlike posts
   - Comment on posts
-  - Save/Bookmark posts
-  - Share posts
+ 
 
 ## 🛠️ Tech Stack
 
