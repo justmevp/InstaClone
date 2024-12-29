@@ -7,6 +7,7 @@ import { DarkModeContext } from './components/context/darkModeContext';
 import Navbar from './components/navbar/Navbar';
 import { useLocation } from 'react-router-dom';
 
+
 // ==============================|| APP - THEME, ROUTER, LOCAL  ||============================== //
 
 const App = () => {

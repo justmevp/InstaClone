@@ -1,4 +1,4 @@
-// material-ui
+// Import các components từ Material-UI
 import { Box, IconButton, Popover, InputBase, List, ListItem, ListItemAvatar, ListItemText, Avatar, Typography } from '@mui/material';
 import { useMediaQuery } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
@@ -9,30 +9,32 @@ import { DarkModeContext } from '../../../../components/context/darkModeContext'
 import { useNavigate } from 'react-router-dom';
 import { fetchGetDataWithAuth, fetchGetDataWithAuthArrayBuffer } from '../../../../client/client';
 
-// project import
-// import MobileSection from './MobileSection';
+// Import các components con
 import Profile from './Profile';
 import './HeaderContent.scss';
 
-// ==============================|| HEADER - CONTENT ||============================== //
-
+// Component chính cho phần header
 const HeaderContent = () => {
+  // Kiểm tra kích thước màn hình có phải mobile không
   const matchesXs = useMediaQuery((theme) => theme.breakpoints.down('md'));
-  const [showSearch, setShowSearch] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
-  const [profileImages, setProfileImages] = useState({});
+  
+  // Các state quản lý trạng thái
+  const [showSearch, setShowSearch] = useState(false); // Hiển thị/ẩn ô tìm kiếm
+  const [anchorEl, setAnchorEl] = useState(null); // Vị trí hiển thị popover thông báo
+  const [searchQuery, setSearchQuery] = useState(''); // Từ khóa tìm kiếm
+  const [searchResults, setSearchResults] = useState([]); // Kết quả tìm kiếm
+  const [profileImages, setProfileImages] = useState({}); // Lưu trữ ảnh đại diện
+  
   const navigate = useNavigate();
-  const { darkMode } = useContext(DarkModeContext);
+  const { darkMode } = useContext(DarkModeContext); // Lấy trạng thái dark mode
 
+  // Effect xử lý tìm kiếm người dùng
   useEffect(() => {
     const fetchUsers = async () => {
       if (searchQuery.trim()) {
         try {
-          console.log('Searching for:', searchQuery);
+          // Gọi API tìm kiếm người dùng
           const response = await fetchGetDataWithAuth(`/search?query=${encodeURIComponent(searchQuery)}&followedOnly=true`);
-          console.log('Search response:', response);
           setSearchResults(response.data || []);
         } catch (error) {
           console.error('Error searching users:', error);
@@ -43,38 +45,40 @@ const HeaderContent = () => {
       }
     };
 
+    // Debounce để tránh gọi API quá nhiều
     const delayDebounce = setTimeout(fetchUsers, 300);
     return () => clearTimeout(delayDebounce);
   }, [searchQuery]);
 
+  // Effect tải ảnh đại diện cho kết quả tìm kiếm
   useEffect(() => {
     const loadProfileImages = async () => {
       for (const user of searchResults) {
-       
-          try {
-            const response = await fetchGetDataWithAuthArrayBuffer(user.photoProfileDTO.profileImage);
-            const blob = new Blob([response.data]);
-            const imageUrl = URL.createObjectURL(blob);
-            setProfileImages(prev => ({
-              ...prev,
-              [user.id]: imageUrl
-            }));  
-          } catch (error) {
-            console.error('Error loading profile image:', error);
-          }
-       
+        try {
+          // Tải ảnh đại diện và chuyển đổi thành URL
+          const response = await fetchGetDataWithAuthArrayBuffer(user.photoProfileDTO.profileImage);
+          const blob = new Blob([response.data]);
+          const imageUrl = URL.createObjectURL(blob);
+          setProfileImages(prev => ({
+            ...prev,
+            [user.id]: imageUrl
+          }));  
+        } catch (error) {
+          console.error('Error loading profile image:', error);
+        }
       }
     };
 
     loadProfileImages();
   }, [searchResults]);
 
+  // Xử lý khi người dùng nhập từ khóa tìm kiếm
   const handleSearchChange = (event) => {
     const value = event.target.value;
-    console.log('Search input changed:', value);
     setSearchQuery(value);
   };
 
+  // Xử lý khi người dùng nhấn Enter trong ô tìm kiếm
   const handleSearchKeyDown = async (event) => {
     if (event.key === 'Enter' && searchQuery.trim()) {
       navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
@@ -84,6 +88,7 @@ const HeaderContent = () => {
     }
   };
 
+  // Xử lý khi click vào một người dùng trong kết quả tìm kiếm
   const handleUserClick = (userId) => {
     navigate(`/profile/${userId}`);
     setShowSearch(false);
@@ -91,6 +96,7 @@ const HeaderContent = () => {
     setSearchResults([]);
   };
 
+  // Xử lý hiển thị/ẩn popover thông báo
   const handleNotificationClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -99,6 +105,7 @@ const HeaderContent = () => {
     setAnchorEl(null);
   };
 
+  // Bật/tắt ô tìm kiếm
   const toggleSearch = () => {
     setShowSearch(!showSearch);
   };
@@ -108,6 +115,7 @@ const HeaderContent = () => {
 
   return (
     <>
+      {/* Thanh công cụ chính */}
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, ml: 'auto' }}>
         <IconButton onClick={toggleSearch} sx={{ color: 'text.primary' }}>
           <SearchIcon />
@@ -120,7 +128,7 @@ const HeaderContent = () => {
         <Profile />
       </Box>
 
-      {/* Search Overlay */}
+      {/* Overlay tìm kiếm */}
       {showSearch && (
         <Box 
           className={`search-overlay ${darkMode ? 'dark' : ''}`}
@@ -131,6 +139,7 @@ const HeaderContent = () => {
             }
           }}
         >
+          {/* Ô nhập tìm kiếm */}
           <Box className="search-container">
             <InputBase
               placeholder="Tìm kiếm người dùng..."
@@ -152,7 +161,7 @@ const HeaderContent = () => {
             </IconButton>
           </Box>
 
-          {/* Search Results Dropdown */}
+          {/* Danh sách kết quả tìm kiếm */}
           {searchResults.length > 0 && (
             <Box 
               sx={{ 
@@ -179,7 +188,7 @@ const HeaderContent = () => {
                   >
                     <ListItemAvatar>
                       <Avatar
-                        src={profileImages[user.id] }
+                        src={profileImages[user.id]}
                         alt={user.userName}
                       />
                     </ListItemAvatar>
@@ -203,7 +212,7 @@ const HeaderContent = () => {
         </Box>
       )}
 
-      {/* Notifications Popover */}
+      {/* Popover thông báo */}
       <Popover
         id={id}
         open={open}
@@ -238,7 +247,7 @@ const HeaderContent = () => {
             backgroundColor: darkMode ? '#1a1a1a' : '#fff',
           }}>
             <Typography variant="h6" sx={{ color: darkMode ? '#fff' : 'inherit' }}>
-              Notifications
+              Thông báo
             </Typography>
             <IconButton 
               size="small" 
@@ -271,12 +280,12 @@ const HeaderContent = () => {
               <ListItemText 
                 primary={
                   <Typography sx={{ color: darkMode ? '#fff' : 'inherit' }}>
-                    John Doe liked your post
+                    John Doe thích bài viết của bạn
                   </Typography>
                 }
                 secondary={
                   <Typography variant="body2" sx={{ color: darkMode ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.6)' }}>
-                    2 hours ago
+                    2 giờ trước
                   </Typography>
                 }
               />
@@ -295,12 +304,12 @@ const HeaderContent = () => {
               <ListItemText 
                 primary={
                   <Typography sx={{ color: darkMode ? '#fff' : 'inherit' }}>
-                    Jane Smith started following you
+                    Jane Smith bắt đầu theo dõi bạn
                   </Typography>
                 }
                 secondary={
                   <Typography variant="body2" sx={{ color: darkMode ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.6)' }}>
-                    1 day ago
+                    1 ngày trước
                   </Typography>
                 }
               />

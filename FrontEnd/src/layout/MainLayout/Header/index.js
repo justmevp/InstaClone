@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { AppBar, IconButton, Toolbar, useMediaQuery } from '@mui/material';
+import { AppBar, IconButton, Toolbar, useMediaQuery, Box } from '@mui/material';
 
 // project import
 import AppBarStyled from './AppBarStyled';
-import HeaderContent from './HeaderContent';
+import HeaderContent from './HeaderContent/HeaderContent';
+import Logo from 'components/Logo';
 
 // assets
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
@@ -15,24 +17,43 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 
 const Header = ({ open, handleDrawerToggle }) => {
   const theme = useTheme();
+  const navigate = useNavigate();
+  const location = useLocation();
   const matchDownMD = useMediaQuery(theme.breakpoints.down('lg'));
 
   const iconBackColor = 'grey.100';
   const iconBackColorOpen = 'grey.200';
 
+  const isSearchPage = location.pathname === '/search';
+
   // common header
   const mainHeader = (
     <Toolbar>
-      <IconButton
-        disableRipple
-        aria-label="open drawer"
-        onClick={handleDrawerToggle}
-        edge="start"
-        color="secondary"
-        sx={{ color: 'text.primary', bgcolor: open ? iconBackColorOpen : iconBackColor, ml: { xs: 0, lg: -2 } }}
-      >
-        {!open ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-      </IconButton>
+      {isSearchPage ? (
+        <Box
+          onClick={() => navigate('/')}
+          sx={{ 
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            ml: { xs: 0, lg: -2 },
+            '&:hover': { opacity: 0.8 }
+          }}
+        >
+          <Logo />
+        </Box>
+      ) : (
+        <IconButton
+          disableRipple
+          aria-label="open drawer"
+          onClick={handleDrawerToggle}
+          edge="start"
+          color="secondary"
+          sx={{ color: 'text.primary', bgcolor: open ? iconBackColorOpen : iconBackColor, ml: { xs: 0, lg: -2 } }}
+        >
+          {!open ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+        </IconButton>
+      )}
       <HeaderContent />
     </Toolbar>
   );

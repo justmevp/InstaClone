@@ -22,4 +22,9 @@ public interface UsersRepository extends JpaRepository<Users, Long>{
            "AND (LOWER(u.name) LIKE LOWER(CONCAT('%', :query, '%')) OR LOWER(u.userName) LIKE LOWER(CONCAT('%', :query, '%')))")
     List<Users> searchFollowedUsers(@Param("userId") long userId, @Param("query") String query);
 
+    // Get IDs of followed users
+    @Query("SELECT u.id FROM Users u " +
+           "JOIN Follower f ON f.user.id = u.id " +
+           "WHERE f.follower.id = :userId")
+    List<Long> findFollowedUserIds(@Param("userId") long userId);
 }

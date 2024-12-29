@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import RssFeedIcon from '@mui/icons-material/RssFeed';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import GroupsIcon from '@mui/icons-material/Groups';
@@ -12,13 +12,14 @@ import Friends from '../friends/Friends';
 import { DarkModeContext } from 'components/context/darkModeContext';
 import { fetchGetDataWithAuth } from 'client/client';
 import Logout from "pages/authentication/Logout";
+
 const Sidebar = () => {
   const { dispatch } = useContext(DarkModeContext);
   const navigate = useNavigate();
+  const location = useLocation();
   const [friends, setFriends] = useState([]);
+  const [showSidebar, setShowSidebar] = useState(true);
 
-
-  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -31,7 +32,19 @@ const Sidebar = () => {
     };
     fetchData();
   }, []);
- 
+
+  useEffect(() => {
+    if (location.pathname === '/search') {
+      setShowSidebar(false);
+    } else {
+      setShowSidebar(true);
+    }
+  }, [location.pathname]);
+
+  if (!showSidebar) {
+    return null;
+  }
+
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">

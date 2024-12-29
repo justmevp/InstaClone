@@ -4,17 +4,13 @@ import { lazy } from 'react';
 import Loadable from 'components/Loadable';
 import MainLayout from 'layout/MainLayout';
 
-
-
 // render - sample page
 const HomePage = Loadable(lazy(() => import('pages/home/home')));
 const ProfilePage = Loadable(lazy(() => import('pages/profile/Profile')));
 const EditProfilePage = Loadable(lazy(() => import('pages/editProfile/EditProfile')));
 const AboutPage = Loadable(lazy(() => import('pages/staticPages/about')));
 const PhotoEditPage = Loadable(lazy(() => import('pages/home/photoEdit')));
-
-
-
+const SearchResultsPage = Loadable(lazy(() => import('pages/search/SearchResults')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -42,7 +38,10 @@ const MainRoutes = {
       path: '/photo/edit',
       element: <PhotoEditPage />
     },
-   
+    {
+      path: '/search',
+      element: <SearchResultsPage />
+    }
   ]
 };
 
