@@ -10,6 +10,7 @@ A full-featured Instagram/Facebook clone built with Spring Boot and React, featu
 - [Prerequisites](#-prerequisites)
 - [Installation & Setup](#-installation--setup)
   - [Backend Setup](#backend-setup)
+  - [Elasticsearch Setup](#elasticsearch-setup)
   - [Frontend Setup](#frontend-setup)
 - [API Documentation](#-api-documentation)
 - [Security](#-security)
@@ -50,6 +51,9 @@ A full-featured Instagram/Facebook clone built with Spring Boot and React, featu
   - Save/Bookmark posts
   - Share posts
 
+- **Search Functionality**
+  - Efficient search using Elasticsearch for quick post retrieval.
+
 ## 🛠️ Tech Stack
 
 ### Backend
@@ -58,6 +62,7 @@ A full-featured Instagram/Facebook clone built with Spring Boot and React, featu
 - Spring Security with JWT
 - Spring Data JPA
 - MySQL Database
+- Elasticsearch for search capabilities
 - Maven
 - Swagger UI for API Documentation
 
@@ -108,6 +113,20 @@ mvn clean install
 mvn spring-boot:run
 ```
 
+### Elasticsearch Setup
+1. **Download Elasticsearch:** Visit [Elasticsearch Downloads](https://www.elastic.co/downloads/elasticsearch) and download the latest version suitable for your operating system.
+2. **Install Elasticsearch:** Follow the installation instructions provided on the website for your specific OS.
+3. **Start Elasticsearch:** Once installed, start the Elasticsearch service. You can do this by running the following command in your terminal:
+   ```bash
+   # For Windows
+   elasticsearch.bat
+   
+   # For macOS/Linux
+   ./elasticsearch
+   ```
+4. **Verify Installation:** Open a web browser and navigate to `http://localhost:9200`. You should see a JSON response confirming that Elasticsearch is running.
+5. **Configure Application:** Ensure that your application is configured to connect to the Elasticsearch instance by setting the appropriate properties in your application configuration files.
+
 ### Frontend Setup
 
 1. Navigate to frontend directory
@@ -153,4 +172,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👨‍💻 Author
 
 - GitHub: [@justmevp](https://github.com/justmevp)
-
