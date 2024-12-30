@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserSearchService {
+public class UserElasticSearchService {
     @Autowired
     private UserElasticSearchRepository userElasticSearchRepository;
 

@@ -141,7 +141,7 @@ const SearchResults = () => {
                     <ListItemButton onClick={() => handleUserClick(user.id)}>
                       <ListItemAvatar>
                         <Avatar 
-                          src={user.profileImage ? `/api/v1${user.profileImage}` : '/assets/person/noAvatar.png'} 
+                          src={user.photoProfileDTO.profileImage ? `/api/v1${user.photoProfileDTO.profileImage}` : 'D:/InstaClone Spring project/InstaClone/InstaClone/src/main/resources/DefaultProfile/defaultprofile.png'} 
                           alt={user.userName}
                         />
                       </ListItemAvatar>

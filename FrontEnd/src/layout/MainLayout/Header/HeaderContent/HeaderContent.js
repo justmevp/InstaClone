@@ -75,6 +75,7 @@ const HeaderContent = () => {
   // Xử lý khi người dùng nhập từ khóa tìm kiếm
   const handleSearchChange = (event) => {
     const value = event.target.value;
+    console.log('Search input changed:', value);
     setSearchQuery(value);
   };
 
@@ -247,7 +248,7 @@ const HeaderContent = () => {
             backgroundColor: darkMode ? '#1a1a1a' : '#fff',
           }}>
             <Typography variant="h6" sx={{ color: darkMode ? '#fff' : 'inherit' }}>
-              Thông báo
+              Notifications
             </Typography>
             <IconButton 
               size="small" 
@@ -280,12 +281,12 @@ const HeaderContent = () => {
               <ListItemText 
                 primary={
                   <Typography sx={{ color: darkMode ? '#fff' : 'inherit' }}>
-                    John Doe thích bài viết của bạn
+                    John Doe liked your post
                   </Typography>
                 }
                 secondary={
                   <Typography variant="body2" sx={{ color: darkMode ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.6)' }}>
-                    2 giờ trước
+                    2 hours ago
                   </Typography>
                 }
               />
@@ -304,12 +305,12 @@ const HeaderContent = () => {
               <ListItemText 
                 primary={
                   <Typography sx={{ color: darkMode ? '#fff' : 'inherit' }}>
-                    Jane Smith bắt đầu theo dõi bạn
+                    Jane Smith started following you
                   </Typography>
                 }
                 secondary={
                   <Typography variant="body2" sx={{ color: darkMode ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.6)' }}>
-                    1 ngày trước
+                    1 day ago
                   </Typography>
                 }
               />
