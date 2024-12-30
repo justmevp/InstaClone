@@ -143,7 +143,7 @@ const HeaderContent = () => {
           {/* Ô nhập tìm kiếm */}
           <Box className="search-container">
             <InputBase
-              placeholder="Tìm kiếm người dùng..."
+              placeholder="Find people..."
               fullWidth
               value={searchQuery}
               onChange={handleSearchChange}
